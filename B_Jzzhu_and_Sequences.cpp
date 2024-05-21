@@ -11,7 +11,7 @@ void solve() {
     ll x,y, n; cin >> x >> y >> n;
     int a[6] = {x,y, y-x, -1*x, -1*y, -1*y + x};
     n--;
-    cout << (a[n%6] + M)%M;
+    cout << (a[n%6] + 2LL*M)%M;
 }
 
 signed main() {
