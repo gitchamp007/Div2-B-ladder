@@ -9,39 +9,27 @@ using namespace std;
 
 void solve() {
     string s, t; cin >> s >> t;
+    map <char, int> mp;
+    for(int i = 0; i < t.size(); i++) mp[t[i]]++;
+
+    for(int i = 0; i < s.size(); i++) {
+        if(mp.count(s[i])) mp[s[i]]--;
+        if(mp[s[i]] == 0) mp.erase(s[i]);
+    }
+    int ss = 0, ts = 0;
+    while(ss < s.size() && ts < t.size()) {
+        if(s[ss] == t[ts]) {
+            ss++;
+            ts++;
+        } else ss++;
+    }
+    
     if(s.size() == t.size()) {
-        map <char, int> mp;
-        for(int i = 0; i < s.size(); i++) mp[t[i]]++;
-
-        for(int i = 0; i < s.size(); i++) {
-            if(mp.count(s[i])) mp[s[i]]--;
-            if(mp[s[i]] == 0) mp.erase(s[i]);
-        }
-
-        if(mp.size()) cout << "need tree";
-        else cout << "array";
-    } else if(s.size() > t.size()) {
-        int ss = 0, ts = 0;
-        while(ss < s.size() && ts < t.size()) {
-            if(s[ss] == t[ts]) {
-                ss++;
-                ts++;
-            } else ss++;
-        }
-        if(ts == t.size()) cout << "automaton";
-        else {
-            map <char, int> mp;
-            for(int i = 0; i < t.size(); i++) mp[t[i]]++;
-
-            for(int i = 0; i < s.size(); i++) {
-                if(mp.count(s[i])) mp[s[i]]--;
-                if(mp[s[i]] == 0) mp.erase(s[i]);
-            }
-            if(mp.size()) cout << "need tree";
-            else cout << "both";
-        }
-
-    } else cout << "need tree";
+        if(mp.size() == 0) cout << "array";
+        else cout << "need tree";
+    } else if(ts == t.size()) cout << "automaton";
+    else if(mp.size() == 0) cout << "both";
+    else cout << "need tree";
 }
 
 signed main() {
